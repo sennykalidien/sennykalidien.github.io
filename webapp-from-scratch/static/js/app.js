@@ -1,42 +1,117 @@
-var APP = APP || {}; // Namespace als globale object. Zorgt ervoor dat je een nieuwe ruimte (module) maakt binnen de 'window' ter beveiliging. Hierdoor kan je conflicten voorkomen met objects or variables (vooral bij toepassen van 3d party scripts). Maar nooit 100%. Daarnaast zijn de erg handig om blokken van functionaliteit beter the organiseren in mijn applicatie door ze een unieke identiteit mee te geven (zie APP.launch, APP.routes, APP.sections).
+/*************************************************** 
+	NAMESPACE 
+***************************************************/
+var APP = APP || { };
 
-(function () { // IIFE: Immediately-invoked Function Expressions
-    'use strict'; // Scrict is een nieuwe feature in ECMAScript 5. Met EMCAscript5 kunnen we een programma of een functie in strict javascripttaal plaatsen. Het kijkt naar fouten en schakelt features uit die slecht zijn bedacht.
+/*************************************************** 
+	IIFE 
+***************************************************/
+(function () {
+	'use strict';
 
-    APP.launch = { // Literal object 
-        init: function () {
-            APP.routes.init(); // Fire object routes.
-        }
-    };
 
-    APP.routes = {
-        init: function () {                    
-            window.addEventListener("hashchange", function () {
-                APP.sections.toggle(location.hash)
-            }); // if hashtag has change, toggle please.
-            
-            window.addEventListener("load", function () {
-                APP.sections.toggle(location.hash)
-            }); // on load: toggle too please!   
-        }
-    };
+	/*************************************************** 
+		GLOBALE VARIABELEN
+	***************************************************/
+    var sections = document.querySelectorAll("section"); 	    	 	  		
+		
+		
+	/*************************************************** 
+		START de flow van de APP.
+	***************************************************/
+	APP.launch = { 	// Literal object: Launch.
+		init: function () { // Method: functie binnen een literal object.
+			APP.router.init();
+			APP.data.init();
+		}
+	};	
 
-    APP.sections = {
-        toggle: function (route) {
-            var sections = document.querySelectorAll("section");
-            
+
+	/*************************************************** 
+		De flow van de APP. 
+	***************************************************/
+	APP.router = { 	// Literal object: 'router'.  
+		init: function () { 				
+	  		routie({ //Routie kijkt naar wat achter de # komt achter de link en selecteert het.
+			    sections: function() {
+					APP.router.toggle(window.location.hash);
+			    },	    
+			    '*': function() {
+					APP.router.toggle(window.location.hash);
+			    }
+			});
+		},	
+		toggle: function (route) {            
             for (var i = 0; i < sections.length; i++) { // For loop to check all sections.
                 sections[i].classList.add('inactive'); // add inactive to ALL sections                                 
                 
                 if (!route) {  // Default route
-                    sections[0].classList.remove('inactive');  // remove inactive if no hashtag in the link                
+                    sections[0].classList.remove('inactive'); // remove inactive if no hashtag in the link                
                 } else {
-                    document.querySelector(route).classList.remove('inactive'); //remove inactive to the section that corresponds with the hashtag in the links                    
+                    document.querySelector(route).classList.remove('inactive'); //remove inactive to the section that corresponds with the hashtag in the links.                    
                 }
             }
-        }   
-    };
+		}
+	};
+	
+	
+	APP.data = {
+		init: function(){
+			APP.page.top_stories.get();
+		}
+	}
+	
+	
+	/*************************************************** 
+		Pagina's met (JSON) data, opgehaald vanuit NY TIMES. 
+	***************************************************/
+	/* 	
+		HTTPS request: http://api.nytimes.com/svc/topstories/v1/{section}.{response-format}?api-key={your-api-key}
+		API KEY: af7f18026c501a31c7a66eea851e85f4:9:74334837
+	*/
+	APP.page = {
+		top_stories: {			    		    	
+			get: function() {
+    			var responseFormat = 'json',
+    			    storySection = 'technology',
+    			    apiKey = 'af7f18026c501a31c7a66eea851e85f4:9:74334837',
+                    apiURL = 'http://api.nytimes.com/svc/topstories/v1/'+storySection+'.'+responseFormat+'?api-key='+apiKey+'';                   
 
-    APP.launch.init(); // fire object 'fire'.
-
-})();
+                var directives = {
+                    results: {
+                        /* 
+                    	url: {
+                    		href: function () {
+                                return this.url;
+                            },
+							html: function(){
+                            	return "Read more";
+                            }                    	     
+						},
+						*/
+						multimedia: {
+    						url: {
+        						src: function () {
+            						return this.url
+        						}
+    						}	
+						}	
+					}
+	            }; // Sluit directives.
+                
+                var xhrRequest = nanoajax.ajax({
+                        url: apiURL,
+                        method: 'GET'
+                }, function (code, responseText) {
+                        var data = JSON.parse(responseText);
+                        console.log(data);
+                        Transparency.render(document.querySelector('[data-route="top-stories"]'), data, directives);                        
+                })	 		    		    	
+			} 				 
+		}
+	}; // Sluit APP.page.	
+	   
+    
+    APP.launch.init();
+	
+})();	
