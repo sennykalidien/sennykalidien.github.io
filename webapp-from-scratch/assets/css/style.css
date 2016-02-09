@@ -155,3 +155,11 @@ svg     { width: 10%; }
 /* Toggle */
 /* #wrapper main > section { display: none; } */
 #wrapper main > section.inactive { display: none; }
+
+@media (max-width: 40em) {
+#content #top-stories .post > .thumbnails img {
+    min-width: 100%;
+    float: none;
+    margin: 0;
+}    
+}
