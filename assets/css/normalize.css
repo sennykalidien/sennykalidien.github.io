@@ -204,6 +204,11 @@ figure {
   margin: 1em 40px;
 }
 
+figcaption {
+  text-align: center;
+  font-size: 0.9em;
+}
+
 /**
  * Address differences between Firefox and other browsers.
  */
