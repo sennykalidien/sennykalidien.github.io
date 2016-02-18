@@ -4,6 +4,7 @@
 * { 
     margin: 0; 
     padding: 0; 
+    outline: 0; 
     vertical-align: baseline; 
     font-size: 100%; 
     box-sizing: border-box; 
@@ -31,6 +32,9 @@ ul, ol {
 
 a img { 
     border: 0; 
+}
+a:hover, a:active, a:focus { 
+    outline: 0; 
 }
 
 img	{ 
@@ -111,21 +115,17 @@ button {
     margin: 1em 0 0.5em;
     color: #f9f9f9;   
     cursor: pointer;
-    border: 1em solid transparent;
-    background-clip: padding-box;    
-    box-shadow: 0 0 0 1px rgba(0,0,0,.3) inset;    
+}
+
+button a { 
+    display: block;   
+    color: inherit;
 }
 
 svg { 
     height: 1em; 
     width: 1em;
     margin: 0 0.2em 0 0; 
-}
-
-:disabled, [disabled], [aria-disabled="true"] {
-    cursor: not-allowed;
-    color: graytext;
-    background-color: buttonface;    
 }
 
 
@@ -152,7 +152,6 @@ a:hover {
 h1, h2, h3, h4, h5 { 
     color: #1e1e1e; 
     font-weight: normal; 
-    clear: both; 
 }
 
 h1 a, h2 a, h3 a, h4 a, h5 a { 
@@ -161,23 +160,23 @@ h1 a, h2 a, h3 a, h4 a, h5 a {
 }
 
 h1 { 
-    font-size: 1.8em; 
+    font-size: 1.5em; 
 }
 
 h2 { 
-    font-size: 1.5em;
+    font-size: 1.3em;
 }
 
 h3 { 
-    font-size: 1.4em; 
+    font-size: 1.2em; 
 }
 
 h4 { 
-    font-size: 1.3em; 
+    font-size: 1.1em; 
 }
 
 h5 { 
-    font-size: 1.2em; 
+    font-size: 1.0em; 
     font-weight: bold;
 }
 
