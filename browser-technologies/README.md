@@ -12,7 +12,7 @@ Feature Detection
 ## Use Case
 *Ik wil favoriete t-shirts-met-nerdy-teksten kunnen opslaan, en een volgende keer dat ik de site bezoek kunnen gebruiken - Web storage*
 
-![Demo](https://sennykalidien.github.io/browser-technologies/)
+[Demo](https://sennykalidien.github.io/browser-technologies/)
 
 ![Website](https://raw.githubusercontent.com/sennykalidien/EW/master/browser-technologies/week-3/eindopdracht/readme/site.png)
 
@@ -24,7 +24,6 @@ De website is opgebouwd in de 3 lagen volgens de principes van *progressive enha
 3. JavaScript.
 
 In deze volgorde is er gewerkt om de website neer te zetten voor deze use case. Het is van belang dat de website (grotendeels) functioneel is als JavaScript uitgeschakeld wordt en ook als CSS uitgeschakeld wordt.
-
 
 #### HTML
 - De HTML is opgebouwd in HTML5 elementen. De website bestaat uit 1 pagina: De homepagina. Elk t-shirt zit in een <article> element omringt in een <section> container. De favorietenlijst is een <aside> met een <article> als elk favoriet t-shirt. Voor screenreaders is het een absolute must om HTML5 elementen te gebruiken. Er is overigens geen gebruik gemaakt van ARIA, omdat dit onnodig is gebleken voor de doeleinde van deze site.
@@ -58,7 +57,7 @@ Webstorage kan LocalStorage of cookies zijn. Bij het toevoegen van een shirt aan
 ![Array in a Local Storage](https://raw.githubusercontent.com/sennykalidien/EW/master/browser-technologies/week-3/eindopdracht/readme/localstorage-array.png)
 
 #### De fallback
-Als Local Storage niet wordt ondersteund, valt het terug op cookies. Hiervoor heb ik gebruik gemaakt van dit voorbeeld (wat geen polyfill is):
+Als Local Storage niet wordt ondersteund, valt het terug op cookies. Hiervoor heb ik gebruik gemaakt van dit voorbeeld (wat geen polyfill is maar een feature detection):
 [Fluid Byte @ github](https://gist.github.com/Fluidbyte/4718380)
 
 
@@ -88,15 +87,15 @@ if (lsSupport) { // Use LocalStorage
 ```
 
 
-## Test
+## Testen
 
 ### Test 1: Screen Reader
 **Pluspunten**
 - De screenreader leest alle links en buttons goed voor aan de gebruiker.
 - De volgorde die de screenreader volgt klopt, dus de paginastructuur lijkt in orde.
 
-Minpunten:
-- Elk t-shirt blok noemt de screen reader een 'article', dit kan verwarrend zijn voor een gebruiker.
+**Minpunten:**
+- Elk t-shirt containerblok noemt de screen reader een 'article', dit kan verwarrend zijn voor een gebruiker.
 - De afbeeldingen van de t-shirts bevatten geen goede alt text.
 
 **Alt text op afbeeldingen**
@@ -114,7 +113,7 @@ Als JavaScript uit staat kan de gebruiker alsnog de content (de t-shirts) zien. 
 Met de CSS *:target* selector is er gezorgd dat er 1 shirt toegevoegd kan worden als favoriet.
 
 
-### Test 3: Local Storage Fallback
+### Test 4: Local Storage Fallback
 De fallback is getest in Safari private modus. In deze modus ondersteunt Safari geen Local Storage. Perfect dus om te testen en IE 7 en minder (enigzins) na te bootsen!
 
 **Voor herladen pagina**
@@ -123,7 +122,7 @@ De fallback is getest in Safari private modus. In deze modus ondersteunt Safari 
 **Na herladen pagina**
 ![Cookie after refresh](https://raw.githubusercontent.com/sennykalidien/EW/master/browser-technologies/week-3/eindopdracht/readme/cookie_after-refresh.png)
 
-### Demo
-![Demo](https://sennykalidien.github.io/browser-technologies/)
-
 De cookie wordt dus succesvol aangemaakt, en de IDs worden als array opgeslagen.
+
+### Demo
+[Demo](https://sennykalidien.github.io/browser-technologies/)
